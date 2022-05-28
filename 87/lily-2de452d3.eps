@@ -1,0 +1,587 @@
+%!PS-Adobe-2.0 EPSF-2.0
+%%Creator: LilyPond 2.16.2
+%%BoundingBox: -13 -191 133 0
+%%Orientation: Portrait
+%%DocumentSuppliedResources: font CenturySchL-Ital
+%%DocumentSuppliedResources: font CenturySchL-Roma
+%%DocumentSuppliedResources: font Emmentaler-11
+%%DocumentSuppliedResources: font Emmentaler-13
+%%DocumentSuppliedResources: font Emmentaler-Brace
+%%EndComments
+%%BeginProlog
+/lilypond-datadir where {pop} {userdict /lilypond-datadir (/opt/local/share/lilypond/2.16.2) put } ifelse
+%%BeginFont: CenturySchL-Ital
+lilypond-datadir (/fonts/otf/CenturySchL-Ital.otf) concatstrings (r) file .loadfont
+%%EndFont
+
+%%BeginFont: CenturySchL-Roma
+lilypond-datadir (/fonts/otf/CenturySchL-Roma.otf) concatstrings (r) file .loadfont
+%%EndFont
+
+%%BeginFont: Emmentaler-11
+lilypond-datadir (/fonts/otf/emmentaler-11.otf) concatstrings (r) file .loadfont
+%%EndFont
+
+%%BeginFont: Emmentaler-11
+lilypond-datadir (/fonts/otf/emmentaler-11.otf) concatstrings (r) file .loadfont
+%%EndFont
+
+%%BeginFont: Emmentaler-13
+lilypond-datadir (/fonts/otf/emmentaler-13.otf) concatstrings (r) file .loadfont
+%%EndFont
+
+%%BeginFont: Emmentaler-13
+lilypond-datadir (/fonts/otf/emmentaler-13.otf) concatstrings (r) file .loadfont
+%%EndFont
+
+%%BeginFont: Emmentaler-Brace
+lilypond-datadir (/fonts/otf/emmentaler-brace.otf) concatstrings (r) file .loadfont
+%%EndFont
+
+/magfontemmentaler-11mUIBo { /Emmentaler-11 3.7574 output-scale div selectfont } bind def
+/magfontemmentaler-11mPBBo { /Emmentaler-11 2.9822 output-scale div selectfont } bind def
+/magfontemmentaler-13mTIBo { /Emmentaler-13 4.2175 output-scale div selectfont } bind def
+/magfontemmentaler-bracemXVo { /Emmentaler-Brace 4.2175 output-scale div selectfont } bind def
+/lily-output-units 2.83464566929134 def %% millimeter
+/staff-line-thickness 0.143809523809524 def
+/line-width 91.9342992125985 def
+/paper-size (a4) def
+/staff-height 4.0 def
+/output-scale 1.05437941054379 def
+/page-height 281.682283464567 def
+/page-width 199.169291338583 def
+%%BeginResource: procset (music-drawing-routines.ps) 1 0
+%!PS-Adobe-1.0: music-drawing-routines.ps
+%
+% Functions for direct and embedded PostScript
+
+% Careful with double % as comment prefix.
+% Any %%X comment is interpreted as DSC comments.
+
+% TODO: use dicts or prefixes to prevent namespace pollution.
+
+/pdfmark where
+{pop} {userdict /pdfmark /cleartomark load put} ifelse
+
+
+% llx lly urx ury URI
+/mark_URI
+{
+    /uri exch def
+    /ury exch def
+    /urx exch def
+    /lly exch def
+    /llx exch def
+    [
+	/Rect [ llx lly urx ury ]
+	
+	/Border [ 0 0 0 ]
+
+        /Action
+	    <<
+		/Subtype /URI
+		/URI uri
+	    >>
+        /Subtype /Link
+    /ANN
+    pdfmark
+}
+bind def
+
+% llx lly urx ury page
+/mark_page_link
+{
+    /page exch def
+    /ury exch def
+    /urx exch def
+    /lly exch def
+    /llx exch def
+    [
+        /Rect [ llx lly urx ury ]
+        /Border [ 0 0 0 ]
+        /Page page
+        /Subtype /Link
+    /ANN
+    pdfmark
+}
+bind def
+
+% from adobe tech note 5002.
+/BeginEPSF { %def
+    /b4_Inc_state save def % Save state for cleanup
+    /dict_count countdictstack def % Count objects on dict stack
+    /op_count count 1 sub def % Count objects on operand stack
+    userdict begin % Push userdict on dict stack
+    /showpage { } def % Redefine showpage, { } = null proc
+    0 setgray 0 setlinecap % Prepare graphics state
+    1 setlinewidth 0 setlinejoin
+    10 setmiterlimit [ ] 0 setdash newpath
+    /languagelevel where % If level not equal to 1 then
+    {pop languagelevel % set strokeadjust and
+    1 ne % overprint to their defaults.
+      {false setstrokeadjust false setoverprint
+      } if
+    } if
+} bind def
+
+/EndEPSF { %def
+  count op_count sub {pop} repeat % Clean up stacks
+  countdictstack dict_count sub {end} repeat
+  b4_Inc_state restore
+} bind def
+
+/stroke_and_fill {
+	gsave
+		stroke
+	grestore
+	fill
+} bind def
+
+/vector_add { % x1 y1 x2 y2 vector_add x1+x2 y1+y2
+	exch
+	4 1 roll
+	add
+	3 1 roll
+	add
+	exch
+} bind def
+
+/draw_round_box % width height x y blot
+{
+        dup
+	0.0 gt {
+		setlinewidth % w h x y
+		rmoveto % w h
+		2 copy 0 ne exch 0 ne and
+		{
+		    0 setlinecap
+		    1 setlinejoin
+		    currentpoint % w h x1 y1
+		    4 2 roll % x1 y1 w h
+		    4 copy
+		    rectfill
+		    rectstroke
+		} {
+		    1 setlinecap
+		    rlineto stroke
+		} ifelse
+	} {
+		pop % w h x y
+		rmoveto % w h
+		currentpoint % w h x1 y1
+		4 2 roll % x1 y1 w h
+		rectfill
+	} ifelse
+} bind def
+
+/draw_polygon % fill? x(n) y(n) x(n-1) y(n-1) ... x(0) y(0) n blot
+{
+	setlinewidth %set to blot
+
+	0 setlinecap
+	1 setlinejoin
+
+	3 1 roll
+	/polygon_x
+	currentpoint
+	/polygon_y exch def
+	def
+	rmoveto % x(0) y(0)
+	{ polygon_x polygon_y vector_add lineto } repeat % n times
+	closepath
+	{ %fill?
+		stroke_and_fill
+	}{
+		stroke
+	} ifelse
+} bind def
+
+/draw_circle % filled? radius thickness draw_circle
+{
+	setlinewidth	% f? r
+	currentpoint	% f? r x0 y0
+	3 2 roll	% f? x0 y0 r
+	dup 0 rmoveto
+	0 360 arc closepath
+		{ stroke_and_fill }
+		{ stroke }
+	ifelse
+} bind def
+
+/draw_ellipse % filled? x-radius y-radius thickness draw_ellipse
+{
+  setlinewidth % f? x-r y-r
+  /savematrix matrix currentmatrix def
+  scale % f?
+  currentpoint
+  1 0 rmoveto
+  1 0 360  arc closepath
+  savematrix setmatrix
+             { stroke_and_fill}
+             { stroke }
+  ifelse
+} bind def
+
+/draw_partial_ellipse % filled connect x-radius y-radius startangle endangle thickness draw_partial_ellipse
+% Note that filled is not boolean to permit for different graylevels (ie for trill keys)
+{
+  gsave
+  currentpoint translate
+  /thickness exch def
+  /endangle exch def
+  /startangle exch def
+  /y_radius exch def
+  /x_radius exch def
+  /endrad x_radius y_radius mul
+    x_radius x_radius mul
+    endangle cos endangle cos mul mul
+    y_radius y_radius mul
+    endangle sin endangle sin mul mul add sqrt div def
+  /endangle endangle sin endrad mul y_radius div
+    endangle cos endrad mul x_radius div atan def
+  /startrad x_radius y_radius mul
+    x_radius x_radius mul
+      startangle cos startangle cos mul mul
+    y_radius y_radius mul
+      startangle sin startangle sin mul mul add sqrt div def
+  /startangle startangle sin startrad mul y_radius div
+    startangle cos startrad mul x_radius div atan def
+  /connect exch def
+  /filled exch def
+  /savematrix matrix currentmatrix def
+  thickness setlinewidth
+  x_radius y_radius scale
+  startangle cos startangle sin moveto
+  0 0 1 startangle
+    startangle endangle eq { endangle 360 add } { endangle } ifelse
+    arc
+  connect {
+    startangle cos startangle sin moveto endangle cos endangle sin lineto }
+    if
+  savematrix setmatrix filled { stroke_and_fill } { stroke } ifelse
+  grestore
+} bind def
+
+/draw_line % dx dy x1 y1 thickness draw_line
+{
+	setlinewidth % dx dy x1 y1
+	1 setlinecap
+	1 setlinejoin
+	rmoveto % dx dy
+	rlineto
+	stroke
+} bind def
+
+/draw_dashed_line % dx dy thickness dashpattern offset draw_dashed_line
+{
+	1 setlinecap
+	1 setlinejoin
+	setdash % dx dy thickness
+	setlinewidth %dx dy
+	rlineto
+	stroke
+	[] 0 setdash % reset dash pattern
+} bind def
+
+/print_glyphs % w dx dy glyph print_glyphs
+{
+	{
+		currentpoint %w dx dy glyph x0 y0
+		5 2 roll %w x0 y0 dx dy glyph
+		3 1 roll %w x0 y0 glyph dx dy
+		rmoveto %w x0 y0 glyph
+		glyphshow %w x0 y0
+		moveto %w
+		0 rmoveto
+	}repeat
+}bind def
+%end music-drawing-routines.ps
+
+%%EndResource
+%%BeginResource: procset (lilyponddefs.ps) 1 0
+%!PS-Adobe-2.0: lilyponddefs.ps
+%
+% Functions for direct PostScript output
+
+% /setgray { 1 add } bind def
+
+/set-ps-scale-to-lily-scale {
+	lily-output-units output-scale mul dup scale
+} bind def
+
+
+/init-paper {
+	gsave
+	clippath pathbbox newpath
+	/paper-height exch def
+	/paper-width exch def pop pop pop
+	% FIXME
+	/top-margin 2 def
+	paper-width line-width sub 2 div /left-margin exch def
+	grestore
+} bind def
+
+/init-lilypond-parameters {
+	staff-line-thickness setlinewidth
+	staff-height init-paper
+} bind def
+
+
+% end lilyponddefs.ps
+
+%%EndResource
+%%EndProlog
+%%BeginSetup
+init-lilypond-parameters
+%%EndSetup
+
+gsave set-ps-scale-to-lily-scale
+13.1088 -25.5509 moveto magfontemmentaler-13mTIBo /dots.dot glyphshow 
+13.1088 -26.5509 moveto magfontemmentaler-13mTIBo /dots.dot glyphshow 
+12.4041 -26.0509 moveto 0.2732 4.0000 0.0000 -2.0000 0.0000 draw_round_box
+11.1098 -26.0509 moveto 0.8629 4.0000 0.0000 -2.0000 0.0000 draw_round_box
+13.1088 -43.6201 moveto magfontemmentaler-13mTIBo /dots.dot glyphshow 
+13.1088 -44.4816 moveto magfontemmentaler-13mTIBo /dots.dot glyphshow 
+12.4041 -44.0509 moveto 0.2732 2.1438 0.0000 -1.0719 0.0000 draw_round_box
+11.1098 -44.0509 moveto 0.8629 2.1438 0.0000 -1.0719 0.0000 draw_round_box
+13.1088 -9.5509 moveto magfontemmentaler-13mTIBo /dots.dot glyphshow 
+13.1088 -10.5509 moveto magfontemmentaler-13mTIBo /dots.dot glyphshow 
+12.4041 -10.0509 moveto 0.2732 4.0000 0.0000 -2.0000 0.0000 draw_round_box
+11.1098 -10.0509 moveto 0.8629 4.0000 0.0000 -2.0000 0.0000 draw_round_box
+13.1088 -57.6201 moveto magfontemmentaler-13mTIBo /dots.dot glyphshow 
+13.1088 -58.4816 moveto magfontemmentaler-13mTIBo /dots.dot glyphshow 
+12.4041 -58.0509 moveto 0.2732 2.1438 0.0000 -1.0719 0.0000 draw_round_box
+11.1098 -58.0509 moveto 0.8629 2.1438 0.0000 -1.0719 0.0000 draw_round_box
+0.0000 -44.0509 moveto 44.0732 0.0000 0.0719 0.0000 0.1438 draw_line
+0.0000 -29.0509 moveto 1.7217 0.0000 27.9920 0.0000 0.2438 draw_round_box
+0.0000 -29.0509 moveto 1.7217 0.0000 31.7023 0.0000 0.2438 draw_round_box
+0.0000 -29.0509 moveto 1.7217 0.0000 38.3694 0.0000 0.2438 draw_round_box
+0.0000 -28.0509 moveto 44.0732 0.0000 0.0719 0.0000 0.1438 draw_line
+0.0000 -27.0509 moveto 44.0732 0.0000 0.0719 0.0000 0.1438 draw_line
+0.0000 -26.0509 moveto 44.0732 0.0000 0.0719 0.0000 0.1438 draw_line
+0.0000 -25.0509 moveto 44.0732 0.0000 0.0719 0.0000 0.1438 draw_line
+0.0000 -24.0509 moveto 44.0732 0.0000 0.0719 0.0000 0.1438 draw_line
+0.0000 -58.0509 moveto 44.0732 0.0000 0.0719 0.0000 0.1438 draw_line
+41.7874 -9.5509 moveto magfontemmentaler-13mTIBo /dots.dot glyphshow 
+41.7874 -10.5509 moveto magfontemmentaler-13mTIBo /dots.dot glyphshow 
+42.6495 -10.0509 moveto 0.2732 4.0000 0.0000 -2.0000 0.0000 draw_round_box
+43.3542 -10.0509 moveto 0.8629 4.0000 0.0000 -2.0000 0.0000 draw_round_box
+41.7874 -25.5509 moveto magfontemmentaler-13mTIBo /dots.dot glyphshow 
+41.7874 -26.5509 moveto magfontemmentaler-13mTIBo /dots.dot glyphshow 
+42.6495 -26.0509 moveto 0.2732 4.0000 0.0000 -2.0000 0.0000 draw_round_box
+43.3542 -26.0509 moveto 0.8629 4.0000 0.0000 -2.0000 0.0000 draw_round_box
+0.0000 -12.0509 moveto 44.0732 0.0000 0.0719 0.0000 0.1438 draw_line
+0.0000 -11.0509 moveto 44.0732 0.0000 0.0719 0.0000 0.1438 draw_line
+0.0000 -10.0509 moveto 44.0732 0.0000 0.0719 0.0000 0.1438 draw_line
+0.0000 -9.0509 moveto 44.0732 0.0000 0.0719 0.0000 0.1438 draw_line
+0.0000 -8.0509 moveto 44.0732 0.0000 0.0719 0.0000 0.1438 draw_line
+0.0000 -13.0509 moveto 1.7217 0.0000 7.7746 0.0000 0.2438 draw_round_box
+0.0000 -13.0509 moveto 1.7217 0.0000 14.3414 0.0000 0.2438 draw_round_box
+0.0000 -13.0509 moveto 1.7217 0.0000 21.5353 0.0000 0.2438 draw_round_box
+0.0000 -13.0509 moveto 1.7217 0.0000 24.7108 0.0000 0.2438 draw_round_box
+0.0000 -13.0509 moveto 1.7217 0.0000 38.3694 0.0000 0.2438 draw_round_box
+41.7874 -57.6201 moveto magfontemmentaler-13mTIBo /dots.dot glyphshow 
+41.7874 -58.4816 moveto magfontemmentaler-13mTIBo /dots.dot glyphshow 
+42.6495 -58.0509 moveto 0.2732 2.1438 0.0000 -1.0719 0.0000 draw_round_box
+43.3542 -58.0509 moveto 0.8629 2.1438 0.0000 -1.0719 0.0000 draw_round_box
+41.7874 -43.6201 moveto magfontemmentaler-13mTIBo /dots.dot glyphshow 
+41.7874 -44.4816 moveto magfontemmentaler-13mTIBo /dots.dot glyphshow 
+42.6495 -44.0509 moveto 0.2732 2.1438 0.0000 -1.0719 0.0000 draw_round_box
+43.3542 -44.0509 moveto 0.8629 2.1438 0.0000 -1.0719 0.0000 draw_round_box
+33.2184 -52.3749 moveto magfontemmentaler-13mTIBo /flags.u4 glyphshow 
+33.1249 -58.0509 moveto 0.0536 3.9570 -0.0268 1.7190 0.1333 draw_round_box
+33.2184 -39.3446 moveto magfontemmentaler-13mTIBo /flags.u4 glyphshow 
+33.1249 -26.0509 moveto 0.0536 4.5463 -0.0268 -2.7810 0.1333 draw_round_box
+31.9080 -63.5385 moveto 1 2.5000 0 0 0.4314 draw_line
+31.9080 -56.5509 moveto magfontemmentaler-13mTIBo /noteheads.s2 glyphshow 
+28.1977 -9.5509 moveto magfontemmentaler-13mTIBo /noteheads.s2 glyphshow 
+36.7249 -10.0509 moveto 0.0536 4.1713 -0.0268 0.7190 0.1333 draw_round_box
+35.5080 -58.0509 moveto magfontemmentaler-13mTIBo /rests.4 glyphshow 
+35.5080 -44.0509 moveto magfontemmentaler-13mTIBo /rests.4 glyphshow 
+35.5080 -26.0509 moveto magfontemmentaler-13mTIBo /rests.4 glyphshow 
+35.5080 -15.0385 moveto 1 -2.5000 0 0 0.4314 draw_line
+35.5080 -9.5509 moveto magfontemmentaler-13mTIBo /noteheads.s2 glyphshow 
+28.1977 -13.3870 moveto true 2.6306 0.1733 2.6306 -0.1733 0.0667 -0.1733 0.0667 0.1733 3 0.1333 draw_polygon
+28.1977 -14.2190 moveto true 2.6306 0.1733 2.6306 -0.1733 0.0667 -0.1733 0.0667 0.1733 3 0.1333 draw_polygon
+33.1080 -10.0509 moveto magfontemmentaler-13mTIBo /rests.4 glyphshow 
+28.1977 -17.6747 moveto 1 2.5000 0 0 0.4314 draw_line
+26.2269 -52.3749 moveto magfontemmentaler-13mTIBo /flags.u4 glyphshow 
+29.5080 -40.6678 moveto magfontemmentaler-13mTIBo /flags.u4 glyphshow 
+29.4145 -44.0509 moveto 0.0536 4.6641 -0.0268 -1.2810 0.1333 draw_round_box
+22.8644 -39.0509 moveto true 3.2958 0.1733 3.2958 -0.1733 0.0667 -0.1733 0.0667 0.1733 3 0.1333 draw_polygon
+22.8644 -39.8828 moveto true 3.2958 0.1733 3.2958 -0.1733 0.0667 -0.1733 0.0667 0.1733 3 0.1333 draw_polygon
+28.1977 -58.0509 moveto magfontemmentaler-13mTIBo /rests.4 glyphshow 
+28.1977 -49.5385 moveto 1 2.5000 0 0 0.4314 draw_line
+28.1977 -45.5509 moveto magfontemmentaler-13mTIBo /noteheads.s2 glyphshow 
+30.7691 -7.2265 moveto /CenturySchL-Ital 1.83984375 output-scale div selectfont
+0.9674 0.0000 0.0000 /three
+1 print_glyphs
+28.1977 -6.6290 moveto 0.0000 -0.7000 6.3104 0.0000 0.2301 draw_line
+28.1977 -6.6290 moveto -2.1715 0.0000 6.3104 0.0000 0.2301 draw_line
+28.1977 -6.6290 moveto 0.0000 -0.7000 -0.2000 0.0000 0.2301 draw_line
+28.1977 -6.6290 moveto 2.3715 0.0000 -0.2000 0.0000 0.2301 draw_line
+31.9080 -47.0385 moveto 1 -2.5000 0 0 0.4314 draw_line
+31.9080 -44.0509 moveto magfontemmentaler-13mTIBo /noteheads.s2 glyphshow 
+31.9080 -33.5385 moveto 1 2.5000 0 0 0.4314 draw_line
+31.9080 -29.0509 moveto magfontemmentaler-13mTIBo /noteheads.s2 glyphshow 
+30.8015 -10.0509 moveto 0.0536 4.3825 -0.0268 -4.1014 0.1333 draw_round_box
+30.7080 -15.1747 moveto 1 -2.5000 0 0 0.4314 draw_line
+30.7080 -9.5509 moveto magfontemmentaler-13mTIBo /noteheads.s2 glyphshow 
+4.3300 -2.6727 moveto 0.0772 2.5107 1.0675 0.1427 0.0386 draw_round_box
+4.3300 -2.6727 moveto magfontemmentaler-11mUIBo /noteheads.s2 glyphshow 
+5.4940 -3.1856 moveto /CenturySchL-Roma 2.31835938 output-scale div selectfont
+1.1950 0.0000 0.0000 /zero
+1.1950 0.0000 0.0000 /eight
+0.6260 0.0000 0.0000 /space
+1.3088 0.0000 0.0000 /equal
+0.6260 0.0000 0.0000 /space
+5 print_glyphs
+4.3300 -60.0425 moveto /Emmentaler-13 4.21679688 output-scale div selectfont
+1.6503 0.0000 0.0000 /four
+1 print_glyphs
+4.3869 -58.0509 moveto /Emmentaler-13 4.21679688 output-scale div selectfont
+1.5364 0.0000 0.0000 /two
+1 print_glyphs
+4.3300 -46.0425 moveto /Emmentaler-13 4.21679688 output-scale div selectfont
+1.6503 0.0000 0.0000 /four
+1 print_glyphs
+4.3869 -44.0509 moveto /Emmentaler-13 4.21679688 output-scale div selectfont
+1.5364 0.0000 0.0000 /two
+1 print_glyphs
+4.3300 -28.0425 moveto /Emmentaler-13 4.21679688 output-scale div selectfont
+1.6503 0.0000 0.0000 /four
+1 print_glyphs
+4.3869 -26.0509 moveto /Emmentaler-13 4.21679688 output-scale div selectfont
+1.5364 0.0000 0.0000 /two
+1 print_glyphs
+0.1300 -26.0509 moveto magfontemmentaler-13mTIBo /clefs.percussion glyphshow 
+4.3300 -12.0425 moveto /Emmentaler-13 4.21679688 output-scale div selectfont
+1.6503 0.0000 0.0000 /four
+1 print_glyphs
+4.3869 -10.0509 moveto /Emmentaler-13 4.21679688 output-scale div selectfont
+1.5364 0.0000 0.0000 /two
+1 print_glyphs
+0.1300 -10.0509 moveto magfontemmentaler-13mTIBo /clefs.percussion glyphshow 
+36.6314 -5.0509 moveto true 3.1873 -1.3267 3.1873 -1.6733 0.0667 -0.1733 0.0667 0.1733 3 0.1333 draw_polygon
+36.6314 -5.8828 moveto true 3.1873 -1.3267 3.1873 -1.6733 0.0667 -0.1733 0.0667 0.1733 3 0.1333 draw_polygon
+39.8854 -54.6678 moveto magfontemmentaler-13mTIBo /flags.u4 glyphshow 
+38.5751 -33.5385 moveto 1 2.5000 0 0 0.4314 draw_line
+38.5751 -29.0509 moveto magfontemmentaler-13mTIBo /noteheads.s2 glyphshow 
+38.5751 -17.5385 moveto 1 2.5000 0 0 0.4314 draw_line
+38.5751 -13.0509 moveto magfontemmentaler-13mTIBo /noteheads.s2 glyphshow 
+29.3211 -24.2190 moveto true 3.8306 0.1733 3.8306 -0.1733 0.0667 -0.1733 0.0667 0.1733 3 0.1333 draw_polygon
+29.3211 -25.0509 moveto true 3.8306 0.1733 3.8306 -0.1733 0.0667 -0.1733 0.0667 0.1733 3 0.1333 draw_polygon
+39.7920 -58.0509 moveto 0.0536 4.6641 -0.0268 -1.2810 0.1333 draw_round_box
+39.8854 -40.6678 moveto magfontemmentaler-13mTIBo /flags.u4 glyphshow 
+39.7920 -44.0509 moveto 0.0536 4.6641 -0.0268 -1.2810 0.1333 draw_round_box
+39.8854 -24.1678 moveto magfontemmentaler-13mTIBo /flags.u4 glyphshow 
+39.7920 -26.0509 moveto 0.0536 4.6641 -0.0268 -2.7810 0.1333 draw_round_box
+39.7920 -10.0509 moveto 0.0536 6.2575 -0.0268 -2.7810 0.1333 draw_round_box
+38.5751 -63.5385 moveto 1 2.5000 0 0 0.4314 draw_line
+38.5751 -59.5509 moveto magfontemmentaler-13mTIBo /noteheads.s2 glyphshow 
+38.5751 -49.5385 moveto 1 2.5000 0 0 0.4314 draw_line
+38.5751 -45.5509 moveto magfontemmentaler-13mTIBo /noteheads.s2 glyphshow 
+9.2906 -8.1678 moveto magfontemmentaler-13mTIBo /flags.u4 glyphshow 
+29.4145 -26.0509 moveto 0.0536 4.5463 -0.0268 -2.7810 0.1333 draw_round_box
+-0.4301 -51.0509 moveto magfontemmentaler-bracemXVo /brace190 glyphshow 
+14.6406 -26.0509 moveto 0.0536 4.6641 -0.0268 -4.3831 0.1333 draw_round_box
+15.7640 -10.0509 moveto 0.0536 4.5463 -0.0268 -2.7810 0.1333 draw_round_box
+14.5471 -61.0385 moveto 1 -2.5000 0 0 0.4314 draw_line
+14.5471 -58.0509 moveto magfontemmentaler-13mTIBo /noteheads.s2 glyphshow 
+14.5471 -47.0385 moveto 1 -2.5000 0 0 0.4314 draw_line
+14.5471 -44.0509 moveto magfontemmentaler-13mTIBo /noteheads.s2 glyphshow 
+14.5471 -31.2397 moveto 1 -2.5000 0 0 0.4314 draw_line
+14.5471 -25.5509 moveto magfontemmentaler-13mTIBo /noteheads.s2 glyphshow 
+14.5471 -15.0385 moveto 1 -2.5000 0 0 0.4314 draw_line
+14.5471 -13.0509 moveto magfontemmentaler-13mTIBo /noteheads.s2 glyphshow 
+7.9803 -17.5385 moveto 1 2.5000 0 0 0.4314 draw_line
+15.6705 -8.2190 moveto true 10.4897 0.1733 10.4897 -0.1733 0.0667 -0.1733 0.0667 0.1733 3 0.1333 draw_polygon
+22.8644 -9.0509 moveto true 3.2958 0.1733 3.2958 -0.1733 0.0667 -0.1733 0.0667 0.1733 3 0.1333 draw_polygon
+28.1977 -29.0509 moveto magfontemmentaler-13mTIBo /noteheads.s2 glyphshow 
+21.9279 -30.4339 moveto magfontemmentaler-13mTIBo /flags.d3 glyphshow 
+28.1977 -31.0385 moveto 1 -2.5000 0 0 0.4314 draw_line
+21.8345 -26.0509 moveto 0.0536 4.6641 -0.0268 -4.3831 0.1333 draw_round_box
+28.2911 -10.0509 moveto 0.0536 4.3825 -0.0268 -4.1014 0.1333 draw_round_box
+-4.0828 -51.8475 moveto /CenturySchL-Roma 2.31835938 output-scale div selectfont
+0.6260 0.0000 0.0000 /space
+1.5934 0.0000 0.0000 /B
+2 print_glyphs
+9.1971 -10.0509 moveto 0.0536 4.6641 -0.0268 -2.7810 0.1333 draw_round_box
+-0.1301 -33.0509 moveto 0.0863 50.0000 0.0719 -25.0000 0.1438 draw_round_box
+-0.4301 -18.0509 moveto magfontemmentaler-bracemXVo /brace255 glyphshow 
+-4.0828 -18.8475 moveto /CenturySchL-Roma 2.31835938 output-scale div selectfont
+0.6260 0.0000 0.0000 /space
+1.5934 0.0000 0.0000 /A
+2 print_glyphs
+7.9803 -38.7545 moveto /CenturySchL-Ital 2.31835938 output-scale div selectfont
+0.9674 0.0000 0.0000 /s
+1.2519 0.0000 0.0000 /a
+1.6503 0.0000 0.0000 /w
+0.7967 0.0000 0.0000 /t
+0.9105 0.0000 0.0000 /s
+0.9674 0.0000 0.0000 /e
+1.3657 0.0000 0.0000 /d
+1.3657 0.0000 0.0000 /n
+0.7398 0.0000 0.0000 /i
+9 print_glyphs
+4.3803 -21.5380 moveto 0.0772 2.5107 1.0675 0.1427 0.0386 draw_round_box
+4.3803 -21.5380 moveto magfontemmentaler-11mUIBo /noteheads.s2 glyphshow 
+5.5443 -22.0509 moveto /CenturySchL-Roma 2.31835938 output-scale div selectfont
+1.1950 0.0000 0.0000 /zero
+1.1950 0.0000 0.0000 /nine
+0.6260 0.0000 0.0000 /space
+1.3088 0.0000 0.0000 /equal
+0.6260 0.0000 0.0000 /space
+5 print_glyphs
+7.9803 -5.2790 moveto /CenturySchL-Ital 2.31835938 output-scale div selectfont
+0.9674 0.0000 0.0000 /s
+1.2519 0.0000 0.0000 /a
+1.6503 0.0000 0.0000 /w
+0.7967 0.0000 0.0000 /t
+0.9105 0.0000 0.0000 /s
+0.9674 0.0000 0.0000 /e
+1.3657 0.0000 0.0000 /d
+1.3657 0.0000 0.0000 /n
+0.7398 0.0000 0.0000 /i
+9 print_glyphs
+7.9803 -13.0509 moveto magfontemmentaler-13mTIBo /noteheads.s2 glyphshow 
+21.7410 -58.0509 moveto magfontemmentaler-13mTIBo /rests.4 glyphshow 
+21.7410 -47.0385 moveto 1 -2.5000 0 0 0.4314 draw_line
+21.7410 -42.5509 moveto magfontemmentaler-13mTIBo /noteheads.s2 glyphshow 
+21.7410 -31.2397 moveto 1 -2.5000 0 0 0.4314 draw_line
+21.7410 -25.5509 moveto magfontemmentaler-13mTIBo /noteheads.s2 glyphshow 
+21.7410 -17.5385 moveto 1 2.5000 0 0 0.4314 draw_line
+21.7410 -13.0509 moveto magfontemmentaler-13mTIBo /noteheads.s2 glyphshow 
+21.1649 -38.7175 moveto magfontemmentaler-11mPBBo /flags.u4 glyphshow 
+21.0714 -44.0509 moveto 0.0536 2.1687 -0.0268 3.1646 0.1333 draw_round_box
+20.2410 -44.0509 moveto gsave currentpoint translate
+1 setlinecap 1 setlinejoin 0.11504762 setlinewidth
+1.08352191 5.90708931 moveto  1.48964887 6.42431131 2.17065425 6.49381379 2.67289362 6.06929841 curveto  2.18817564 6.32213414 1.50717026 6.25263167 1.08352191 5.90708931 curveto   closepath  gsave stroke grestore fill grestore
+20.2410 -49.5385 moveto 1 2.5000 0 0 0.4314 draw_line
+20.2410 -41.0509 moveto magfontemmentaler-11mPBBo /noteheads.s2 glyphshow 
+26.1334 -44.0509 moveto 0.0536 3.2144 -0.0268 1.7190 0.1333 draw_round_box
+26.1334 -10.0509 moveto 0.0536 4.5463 -0.0268 -2.7810 0.1333 draw_round_box
+24.9165 -63.5385 moveto 1 2.5000 0 0 0.4314 draw_line
+24.9165 -56.5509 moveto magfontemmentaler-13mTIBo /noteheads.s2 glyphshow 
+24.9165 -47.0385 moveto 1 -2.5000 0 0 0.4314 draw_line
+24.9165 -42.5509 moveto magfontemmentaler-13mTIBo /noteheads.s2 glyphshow 
+24.9165 -15.0385 moveto 1 -2.5000 0 0 0.4314 draw_line
+24.9165 -13.0509 moveto magfontemmentaler-13mTIBo /noteheads.s2 glyphshow 
+22.9579 -44.0509 moveto 0.0536 3.2144 -0.0268 1.7190 0.1333 draw_round_box
+22.9579 -10.0509 moveto 0.0536 4.5463 -0.0268 -2.7810 0.1333 draw_round_box
+15.8575 -53.3446 moveto magfontemmentaler-13mTIBo /flags.u4 glyphshow 
+15.7640 -58.0509 moveto 0.0536 4.4873 -0.0268 0.2190 0.1333 draw_round_box
+26.1334 -58.0509 moveto 0.0536 3.9570 -0.0268 1.7190 0.1333 draw_round_box
+15.8575 -39.3446 moveto magfontemmentaler-13mTIBo /flags.u4 glyphshow 
+15.7640 -44.0509 moveto 0.0536 4.4873 -0.0268 0.2190 0.1333 draw_round_box
+33.1249 -44.0509 moveto 0.0536 4.4873 -0.0268 0.2190 0.1333 draw_round_box
+14.7341 -30.4339 moveto magfontemmentaler-13mTIBo /flags.d4 glyphshow 
+19.0698 -52.3749 moveto magfontemmentaler-13mTIBo /flags.u4 glyphshow 
+18.9763 -58.0509 moveto 0.0536 3.9570 -0.0268 1.7190 0.1333 draw_round_box
+17.7594 -63.5385 moveto 1 2.5000 0 0 0.4314 draw_line
+17.7594 -56.5509 moveto magfontemmentaler-13mTIBo /noteheads.s2 glyphshow 
+17.7594 -44.0509 moveto magfontemmentaler-13mTIBo /rests.4 glyphshow 
+17.7594 -26.0509 moveto magfontemmentaler-13mTIBo /rests.4 glyphshow 
+stroke grestore
+%%Trailer
+%%EOF
